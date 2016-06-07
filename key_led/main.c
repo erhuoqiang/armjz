@@ -2,7 +2,10 @@
 #define GPFCON (*(volatile unsigned long *)0x56000050)  
 #define GPFDAT (*(volatile unsigned long *)0x56000054)	  
 #define GPFUP  (*(volatile unsigned long *)0x56000058)	  
-
+//KEY3 和 KEY4 所在寄存器
+#define GPGCON (*(volatile unsigned long *)0x56000060)  
+#define GPGDAT (*(volatile unsigned long *)0x56000064)	  
+#define GPGUP  (*(volatile unsigned long *)0x56000068)	  
 //LED ON OFF
 #define LED1_ON (GPFDAT &= ~(0x00000010))  //GPFDAT:4 = 0
 #define LED2_ON (GPFDAT &= ~(0x00000020))  //GPFDAT:5 = 0
@@ -16,7 +19,8 @@
 //KEY JUDGE
 #define KEY1_JUDGE ((GPFDAT & 0x00000001) == 0) //按键1是否按下
 #define KEY2_JUDGE ((GPFDAT & 0x00000004) == 0) //按键2是否按下
-
+#define KEY3_JUDGE ((GPGDAT & 0x00000008) == 0) //按键3是否按下
+#define KEY4_JUDGE ((GPGDAT & 0x00000800) == 0) //按键4是否按下
 void LED_Init(void)
 {
 	GPFCON &= ~(3<<8 | 3<<10 | 3<<12); //先将3个led的控制位都置0变为输入模式
@@ -28,7 +32,8 @@ void KEY_Init(void)
 {
 	GPFCON &= ~(3<<0 | 3<<4); //KEY1和KEY2 键位输入模式
 	GPFUP  &= ~(1<<0 | 1<<2); //输入模式  开启内部上拉 按键没有按下则为高电平 按下为低电平
-	
+	GPGCON &= ~(3<<6 | 3<<22); //KEY3和KEY4 键位输入模式
+	GPGUP  &= ~(1<<3 | 1<<11); //输入模式  开启内部上拉 按键没有按下则为高电平 按下为低电平
 }	
 void delay(unsigned long count)
 {
@@ -50,8 +55,14 @@ int main(void)
 		{
 			LED2_REVERSAL;
 		}	
-		if(KEY1_JUDGE && KEY2_JUDGE )
+		if(KEY3_JUDGE)
 		{
+			LED3_REVERSAL;
+		}
+		if(KEY4_JUDGE)
+		{
+			LED1_REVERSAL;
+			LED2_REVERSAL;
 			LED3_REVERSAL;
 		}
 		
