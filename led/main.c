@@ -1,5 +1,8 @@
-#define GPF4CON (*(volatile unsigned long *)0x56000050)
-#define GPF4DAT (*(volatile unsigned long *)0x56000054)
+// 2440 的3个led的灯  和外部中断0 2 对应的按钮  
+#define GPFCON (*(volatile unsigned long *)0x56000050)  
+#define GPFDAT (*(volatile unsigned long *)0x56000054)	  
+
+
 
 void delay(unsigned long count)
 {
@@ -10,18 +13,18 @@ void delay(unsigned long count)
 int main(void)
 {
 	
-	GPF4CON = 0x00001500;	
-	GPF4DAT = 0x00000000;
+	GPFCON = 0x00001500;	
+	GPFDAT = 0x00000000;
 	while(1)
 	{
-		GPF4CON = 0x00000100;	
-		GPF4DAT = 0x00000000;
+		GPFCON = 0x00000100;	
+		GPFDAT = 0x00000000;
 		delay(1000);
-		GPF4CON = 0x00000500;	
-		GPF4DAT = 0x00000000;
+		GPFCON = 0x00000500;	
+		GPFDAT = 0x00000000;
 		delay(1000);
-		GPF4CON = 0x00001500;	
-		GPF4DAT = 0x00000000;
+		GPFCON = 0x00001500;	
+		GPFDAT = 0x00000000;
 		delay(1000);
 	}
 	return 1;
