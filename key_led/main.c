@@ -21,6 +21,7 @@
 #define KEY2_JUDGE ((GPFDAT & 0x00000004) == 0) //按键2是否按下
 #define KEY3_JUDGE ((GPGDAT & 0x00000008) == 0) //按键3是否按下
 #define KEY4_JUDGE ((GPGDAT & 0x00000800) == 0) //按键4是否按下
+
 void LED_Init(void)
 {
 	GPFCON &= ~(3<<8 | 3<<10 | 3<<12); //先将3个led的控制位都置0变为输入模式
@@ -48,19 +49,23 @@ int main(void)
 	while(1)
 	{
 		if(KEY1_JUDGE)
-		{
+		{	
+			while(KEY1_JUDGE);
 			LED1_REVERSAL;
 		}
 		if(KEY2_JUDGE)
 		{
+			while(KEY1_JUDGE);
 			LED2_REVERSAL;
 		}	
 		if(KEY3_JUDGE)
 		{
+			while(KEY1_JUDGE);
 			LED3_REVERSAL;
 		}
 		if(KEY4_JUDGE)
 		{
+			while(KEY1_JUDGE);
 			LED1_REVERSAL;
 			LED2_REVERSAL;
 			LED3_REVERSAL;
