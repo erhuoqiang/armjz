@@ -10,7 +10,7 @@ _start:
     ldr sp, =4096                       @ 设置栈指针，以下都是C函数，调用前需要设好栈 SRAM是4K 所以这里是4096
     bl  disable_watch_dog               @ 关闭WATCHDOG，否则CPU会不断重启
     bl  memsetup                        @ 设置存储控制器以使用SDRAM
-    bl  copy_2th_to_sdram               @ 将第二部分代码复制到SDRAM  需要在Makefile中 将第二部分的代码内容指定到生成映像文件具体的位置去
+    bl  copy_2th_to_sdram               @ 将第二部分代码复制到SDRAM  需要在mmu.lds连接脚本中 将第二部分的代码内容指定到生成映像文件具体的位置去
 					@ 比如指定到2048 拷贝函数就可以从SRAM2048处开始复制到SDRAM。使用AT（2048）来指定在映像文件中的
 					@  比如第一部分从0开始占用空间到1500 第二部分AT(2048)就是在第一部分结束后空出548空间然后开始第二部分
     bl  create_page_table               @ 设置页表 需要将开启MMU后需要用到的物理地址全部都映射
