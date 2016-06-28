@@ -36,12 +36,16 @@ void KEY_Init(void)
 	GPGCON &= ~(3<<6 | 3<<22); //KEY3和KEY4 键位输入模式
 	GPGUP  &= ~(1<<3 | 1<<11); //输入模式  开启内部上拉 按键没有按下则为高电平 按下为低电平
 }	
-void delay(unsigned long count)
+//因为Makefile中 编译采用了-O2优化 对于延时函数的变量需要加上 
+//volatile修饰  这样才不会让编译器将延时优化掉
+void Delay(volatile unsigned long count) 
 {
-	int i = 0;
+	volatile int i = 0;
 	for(;count>0;count--)
 	for(i = 0; i < 100;i++);	
 }
+
+
 int main(void)
 {
 	LED_Init();
@@ -50,22 +54,26 @@ int main(void)
 	{
 		if(KEY1_JUDGE)
 		{	
+			Delay(200);
 			while(KEY1_JUDGE);
 			LED1_REVERSAL;
 		}
 		if(KEY2_JUDGE)
 		{
-			while(KEY1_JUDGE);
+			Delay(200);
+			while(KEY2_JUDGE);
 			LED2_REVERSAL;
 		}	
 		if(KEY3_JUDGE)
 		{
-			while(KEY1_JUDGE);
+			Delay(200);
+			while(KEY3_JUDGE);
 			LED3_REVERSAL;
 		}
 		if(KEY4_JUDGE)
 		{
-			while(KEY1_JUDGE);
+			Delay(200);
+			while(KEY4_JUDGE);
 			LED1_REVERSAL;
 			LED2_REVERSAL;
 			LED3_REVERSAL;
