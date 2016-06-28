@@ -5,5 +5,5 @@ all:
 	arm-linux-objcopy -O binary -S sdram_elf sdram.bin
 	arm-linux-objdump -D -m arm sdram_elf > sdram.dis
 clean:
-	rm -f sdram.bin  *.o  sdram_elf sdram.dis
+	rm -f sdram.bin  *.o  sdram_elf sdram.dis *~
 	 

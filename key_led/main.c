@@ -55,17 +55,17 @@ int main(void)
 		}
 		if(KEY2_JUDGE)
 		{
-			while(KEY1_JUDGE);
+			while(KEY2_JUDGE);
 			LED2_REVERSAL;
 		}	
 		if(KEY3_JUDGE)
 		{
-			while(KEY1_JUDGE);
+			while(KEY3_JUDGE);
 			LED3_REVERSAL;
 		}
 		if(KEY4_JUDGE)
 		{
-			while(KEY1_JUDGE);
+			while(KEY4_JUDGE);
 			LED1_REVERSAL;
 			LED2_REVERSAL;
 			LED3_REVERSAL;
