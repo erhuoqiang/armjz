@@ -104,7 +104,8 @@ void Dealwith_IRQ(void)
 
     SRCPND = 1<<oft;  //对应位写1代表清中断
     INTPND = 1<<oft;   
-    Enable_IRQ();  //先清除对应中断后 在使能中断 实现中断嵌套 要不然会一直进入中断，如果先使能的话，因为中断标志位还没清除所以又会进入中断
+    /*关闭中断嵌套  确保Timer0中断在执行进程切换的时候不会被打断*/
+    //Enable_IRQ();  //先清除对应中断后 在使能中断 实现中断嵌套 要不然会一直进入中断，如果先使能的话，因为中断标志位还没清除所以又会进入中断
     switch( oft )
     {
         // S2被按下
@@ -162,6 +163,6 @@ static void UART0_RX_Handle(void)
    char c;
    c = getc();
    //if (isDigit(c) || isLetter(c))
-	putc(c+1);
+	putc(c);
 }
 
